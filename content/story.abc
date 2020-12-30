@@ -1,0 +1,166 @@
+@start
+	*say
+		Welcome to the battle field
+	*then
+		->startGame
+
+@startGame
+	*say
+		Would you like to play a game?
+	*then
+		hear yes, yeah, sure, definitely{
+			->enterGame
+		}
+		hear no, nup, naha{
+			->end
+		}
+
+@enterGame
+	*say
+		Choose left, right or down.
+	*then
+		set playerHealth as 100
+		hear left{
+			set opponentHealth as 50
+			-> left
+		}
+		hear right{
+			set opponentHealth as 40
+			-> right
+		}
+		hear down{
+			set opponentHealth as 60
+			-> down
+		}
+
+@left
+	*say
+		Eagle
+	*then
+		<-> fightEagle
+		-> updateLeft
+
+@fightEagle
+	roll1d3
+	if rollResult == 1{
+        decrease playerHealth by 15
+    }
+    if rollResult == 2{
+        decrease opponentHealth by 20
+    }
+	else{
+		decrease playerHealth by 10
+	}
+    >>RETURN
+
+@updateLeft
+	*say
+		Your health is {playerHealth} and opponent health is {opponentHealth}.
+	*then
+		if playerHealth <= 0 {
+            -> dead
+        }
+        if opponentHealth <= 0 {
+            -> win
+        }
+		else{
+			<-> fightEagle
+		}
+
+@right
+	*say
+		Bull
+	*then
+		<-> fightBull
+		-> updateRight
+
+@fightBull
+	roll1d3
+	if rollResult == 1{
+        decrease playerHealth by 20
+    }
+    if rollResult == 2{
+        decrease opponentHealth by 10
+    }
+	else{
+		decrease opponentHealth by 5
+	}
+    >>RETURN
+
+@updateRight
+	*say
+		Your health is {playerHealth} and opponent health is {opponentHealth}.
+	*then
+		if playerHealth <= 0 {
+            -> dead
+        }
+        if opponentHealth <= 0 {
+            -> win
+        }
+		else{
+			<-> fightBull
+		}
+
+@down
+	*say
+		Lion
+	*then
+		<-> fightLion
+		-> updateDown
+
+@fightLion
+	roll1d4
+	if rollResult == 1{
+        decrease playerHealth by 20
+    }
+    if rollResult == 2{
+        decrease opponentHealth by 10
+    }
+	if rollResult == 3{
+		decrease playerHealth by 10
+	}
+	else{
+		decrease opponentHealth by 5
+	}
+    >>RETURN
+
+@updateDown
+	*say
+		Your health is {playerHealth} and opponent health is {opponentHealth}.
+	*then
+		if playerHealth <= 0 {
+            -> dead
+        }
+        if opponentHealth <= 0 {
+            -> win
+        }
+		else{
+			<-> fightLion
+		}
+
+@win
+	*say
+		Congrats! You won!
+	*then
+		->anotherGame
+
+@dead
+	*say
+		You are dead!
+	*then
+		-> anotherGame
+
+@anotherGame
+	*say
+		Would you like to play again?
+	*then
+		hear yes, yeah, sure, definitely{
+			->enterGame
+		}
+		hear no, nup, naha{
+			->end
+		}
+
+@end
+	*say
+		Bye, have a good day!
