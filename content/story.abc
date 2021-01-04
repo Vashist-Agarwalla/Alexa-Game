@@ -18,7 +18,7 @@
 @enterGame
     *show
         template: 'default'
-        background: https://s3.ap-south-1.amazonaws.com/com.alexa.task2/307532439.jpg
+        background: 'https://s3.ap-south-1.amazonaws.com/com.alexa.task2/307532439.jpg'
         title: 'Game'
 
 	*say
